@@ -19,9 +19,18 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+  "lib/css/bootstrap.min.css",
+  "lib/css/font-awesome.min.css",
+  "lib/css/prettyPhoto.css",
+  "lib/css/animate.css",
+  "lib/css/main.css"
       ],
-      "scripts": [],
+      "scripts": [
+         "lib/js/jquery.js",
+        "lib/js/bootstrap.min.js", 
+        "lib/js/jquery.prettyPhoto.js",
+        "lib/js/main.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
