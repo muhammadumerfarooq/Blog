@@ -23,6 +23,14 @@ import { DatePipe } from '@angular/common';
 import { BloggerslistService } from '../services/bloggerslist.service';
 import { CreatedBlogComponent } from './created-blog/created-blog.component';
 import { SharedserviceService } from '../services/sharedservice.service';
+import { InsertblogService } from '../services/insertblog.service';
+import { UpdateblogService } from '../services/updateblog.service';
+import { InsertanswerService } from '../services/insertanswer.service';
+import { BlogdataService } from '../services/blogdata.service';
+import { AllBlogsComponent } from './all-blogs/all-blogs.component';
+import { BlogsService } from '../services/blogs.service';
+import { SeletedblogComponent } from './seletedblog/seletedblog.component';
+import { BlogsonkeyService } from '../services/blogsonkey.service';
 const firebaseConfig = {
     apiKey: 'AIzaSyCyP2TexHkARFI45ec1b9VEFwlNt2BdBPQ',
     authDomain: 'assessu-i14.firebaseapp.com',
@@ -37,7 +45,9 @@ const firebaseConfig = {
     AppComponent,
     RegistrationComponent,
     BlogComponent,
-    CreatedBlogComponent
+    CreatedBlogComponent,
+    AllBlogsComponent,
+    SeletedblogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +62,9 @@ const firebaseConfig = {
     StorageServiceModule,
     routing
   ],
-  providers: [InsertbloggerService, UpdatebloggerService, DeletebloggerService, BloggerslistService, SharedserviceService],
+  providers: [InsertbloggerService, UpdatebloggerService, InsertblogService,
+    DeletebloggerService, BloggerslistService, SharedserviceService, UpdateblogService, InsertanswerService,
+    BlogdataService, BlogsService, BlogsonkeyService],
   bootstrap: [AppComponent],
   exports: [MatButtonModule, MatCheckboxModule]
 

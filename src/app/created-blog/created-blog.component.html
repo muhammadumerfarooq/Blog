@@ -142,6 +142,7 @@
                                 <li><a href="#">Drupal</a></li>
                                 <li><a href="#">Magento</a></li>
                                 <li><a href="#">Bootstrap</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -149,15 +150,11 @@
                 <div class="widget tags">
                     <h3>Tag Cloud</h3>
                     <ul class="tag-cloud">
-                        <li><a class="btn btn-xs btn-primary" href="#">CSS3</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">HTML5</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">WordPress</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">Joomla</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">Drupal</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">Bootstrap</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">jQuery</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">Tutorial</a></li>
-                        <li><a class="btn btn-xs btn-primary" href="#">Update</a></li>
+<span *ngFor="let Tag of tagslist">
+    <a class="btn btn-xs btn-primary" href="#">
+        {{Tag}}
+    </a>
+</span>
                     </ul>
                 </div><!--/.tags-->
 
@@ -173,26 +170,35 @@
                     <div class="blog-item">
                         <!-- <img class="img-responsive img-blog" src="images/blog/blog2.jpg" width="100%" alt="" /> -->
                         <div class="blog-content">
-                            <h3>Pointers in programming language</h3>
+                            <h3>{{topic}}</h3>
                             <div class="entry-meta">
-                                <span><i class="icon-user"></i> <a href="#">junaid</a></span>
-                                <span><i class="icon-folder-close"></i> <a href="#">C++</a>
-                                <i class="icon-folder-close"></i>
-                                <a href="#">C</a>
+                                <span><i class="icon-user"></i> <a href="#">{{dataname}}</a></span>
+                                <span *ngFor =" let item of tagslist ">
+                                    <i class="icon-folder-close"></i> <a href="#">{{item}}</a>
+
+
                                 </span>
-                                <span><i class="icon-calendar"></i> April 24th, 2018</span>
-                                <span><i class="icon-comment"></i> <a href="blog-item.html#comments">0 Comments</a></span>
+                                <span><i class="icon-calendar"></i> {{date}} </span>
+                                <span><i class="icon-comment"></i> <a href="blog-item.html#comments"> {{totalcomments}}</a></span>
                             </div>
                             <!-- <p class="lead">Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p> -->
 
                             <!-- <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p> -->
 
-                            <p> I am confused in Pointers Declarations and Concept of Pointers how pointers are used in C++ and C </p>
+                            <p> {{description}} </p>
 
                             <hr>
 
                             <div class="tags">
-                                <i class="icon-tags"></i> Tags <a class="btn btn-xs btn-primary" href="#">C++</a> <a class="btn btn-xs btn-primary" href="#">HTML5</a> <a class="btn btn-xs btn-primary" href="#">WordPress</a> <a class="btn btn-xs btn-primary" href="#">Joomla</a>
+                                <i class="icon-tags"></i> Tags
+
+
+                                <span *ngFor="let Tag of tagslist">
+                                    <a class="btn btn-xs btn-primary" href="#">
+                                        {{Tag}}
+                                    </a>
+                                </span>
+
                             </div>
 
                             <p>&nbsp;</p>
@@ -215,17 +221,17 @@
                             <div id="comments">
                                 <div id="comments-list">
                                     <h3>{{totalcomments}} Comments</h3>
-                                    <div class="media">
+                                    <div *ngFor=" let ans of answerslist" class="media">
                                         <div class="pull-left">
                                             <img class="avatar img-circle" src="../../assets/avatar3.png" alt="">
                                         </div>
-                                        <div *ngIf= "check" class="media-body">
+                                        <div  class="media-body">
                                             <div class="well">
                                                 <div class="media-heading">
-                                                    <strong>Junaid </strong>&nbsp; <small>24 April 2018</small>
-                                                    <a class="pull-right" href="#"><i class="icon-repeat"></i> Reply</a>
+                                                    <strong>{{ans.name}} </strong>&nbsp; <small>{{ans.date}}</small>
+                                                    <a class="pull-right" href="#"><i class="icon-repeat"></i> reply</a>
                                                 </div>
-                                                <p>{{showcomments}}</p>
+                                                <p>{{ans.answer}}</p>
                                             </div>
                                             <!-- <div class="media">
                                                 <div class="pull-left">
@@ -274,7 +280,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-12">
-                                                <textarea [(ngModel)]="comments" rows="8" class="form-control" placeholder="Comment" [ngModelOptions]="{standalone: true}"></textarea>
+                                                <textarea [(ngModel)]="answers" rows="8" class="form-control" placeholder="Comment" [ngModelOptions]="{standalone: true}"></textarea>
                                             </div>
                                         </div>
                                         <button type="submit" (click)="answeredpressed()" class="btn btn-danger btn-lg">Submit Comment</button>

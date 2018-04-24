@@ -4,7 +4,13 @@ export class Answers {
     email: string;
     date: string;
     answer: string;
-
+    blogkey: string;
+    setblogkey(n: string): void {
+        this.blogkey = n;
+    }
+    getblogkey(): string {
+        return this.blogkey;
+    }
     setkey(n: string): void {
         this.key = n;
     }

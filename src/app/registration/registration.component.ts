@@ -35,9 +35,11 @@ export class RegistrationComponent implements OnInit {
  // const blogger  = new Blogger();
   //  insert.createBlogger(blogger);
     this.dataname =  this.getFromLocal('name');
-    this.datapassword =  this.getFromLocal('password');
+    this.datapassword =  this.getFromLocal('email');
+    console.log(this.dataname + '  ' + this.datapassword);
+
 if (this.dataname !== null || this.datapassword !== null) {
-  this.router.navigateByUrl('/user-login');
+  this.router.navigateByUrl('/allblogs');
 
 }
 
@@ -86,7 +88,7 @@ if (this.dataname !== null || this.datapassword !== null) {
   //  console.log(this.insert.inserted);
 
   //  if ( this.insert.inserted === true ) {
-      this.router.navigateByUrl('/create-blog');
+    this.router.navigateByUrl('/allblogs');
 
    // }
   //  this.bloggerlist = this.reguser.getallbloggers();

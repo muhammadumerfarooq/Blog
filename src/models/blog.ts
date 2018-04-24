@@ -5,10 +5,11 @@ export class Blog {
     name: string;
     topic: string;
     tags: string[];
-    date: Date;
-    comments: Number;
-    TotalAnswers: Answers[];
+    date: String;
+    comments: number;
+    // TotalAnswers: Answers;
     location: string;
+    allanswers: Answers[];
 
     setdescription(s: string): void {
         this.description = s;
@@ -46,22 +47,28 @@ export class Blog {
     gettags(): string[] {
         return this.tags;
     }
-    setdate(d: Date): void {
+    setdate(d: String): void {
         this.date = d;
     }
-    getdate(): Date {
+    getdate(): String {
         return this.date;
     }
-    setcomments(coments: Number): void {
+    setcomments(coments: number): void {
         this.comments = coments;
     }
-    getcomments() {
+    getcomments(): number {
         return this.comments;
     }
-    settotalanswers(totalans: Answers[]) {
-        this.TotalAnswers = totalans;
-    }
-    gettotalanswers() {
-        return this.TotalAnswers;
-    }
+    // settotalanswers(totalans: Answers) {
+    //     this.TotalAnswers = totalans;
+    // }
+    // gettotalanswers(): Answers {
+    //     return this.TotalAnswers;
+    // }
+    // setallanswers(totalans: Answers) {
+    //     this.allanswers = totalans;
+    // }
+    // getallanswers(): Answers {
+    //     return this.allanswers;
+    // }
 }

@@ -10,6 +10,9 @@ import { Blog } from '../../models/blog';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { SharedserviceService } from '../../services/sharedservice.service';
+import { InsertbloggerService } from '../../services/insertblogger.service';
+import { InsertblogService } from '../../services/insertblog.service';
+import { Answers } from '../../models/answers';
 
 @Component({
   selector: 'app-blog',
@@ -33,12 +36,17 @@ export class BlogComponent implements OnInit {
   map_object: Maps;
   dataname: string;
   dataemail: string;
+  answerslist: Answers;
+  // anslist: Array<Answers>;
 
-  @Input() blogcreated: Blog;
+  blogcreated: Blog;
   constructor(private sanitizer: DomSanitizer, private elRef: ElementRef,
     @Inject(SESSION_STORAGE) private storage: WebStorageService, private date: DatePipe,
-     private route: ActivatedRoute, private router: Router, private shared: SharedserviceService ) {
+     private route: ActivatedRoute, private router: Router, private shared: SharedserviceService,
+      private insertblog: InsertblogService ) {
   //  this.mapslist = new Array<Maps>();
+    // this.anslist = new Array<Answers>();
+    this.answerslist = new Answers;
     this.bloggerlist = new Array<Blogger>();
     this.tags = '';
     this.title = '';
@@ -84,6 +92,8 @@ export class BlogComponent implements OnInit {
     const myFormattedDate = this.date.transform(now, 'short');
     console.log('date ' + myFormattedDate);
     const localdate = new Date();
+   // console.log('local date ' + localdate);
+
     let valued: any = false;
     if (this.question === '') {
     const src = $('#questionid').css('border-color', 'red');
@@ -112,16 +122,29 @@ export class BlogComponent implements OnInit {
       const src = $('#locationid').css('border-color', '#e6c1c7');
     }
     if (valued === false) {
+      try {
+      // tslint:disable-next-line:prefer-const
+     // let answers = new Array<Answers>();
+       // tslint:disable-next-line:prefer-const
+       let ans = new Answers();
+       ans.setanswer('null');
+
+
       this.blogcreated = new Blog ();
       this.blogcreated.setcomments(0);
       this.blogcreated.setlocation(this.location);
+     // this.blogcreated.settotalanswers(this.answerslist);
       this.blogcreated.setname(this.dataname);
       this.blogcreated.settags(this.tagslist);
       this.blogcreated.settopic(this.question);
       this.blogcreated.setdescription(this.descrption);
-      this.blogcreated.setdate(localdate);
+
+        this.blogcreated.date = myFormattedDate;
+
       this.shared.changeBlogger(this.blogcreated);
+      this.insertblog.insertblog(this.blogcreated);
       this.router.navigateByUrl('/blog');
+      } catch ( err ) {}
 
     }
   }
