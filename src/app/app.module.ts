@@ -22,6 +22,7 @@ import { DatePipe } from '@angular/common';
 
 import { BloggerslistService } from '../services/bloggerslist.service';
 import { CreatedBlogComponent } from './created-blog/created-blog.component';
+import { SharedserviceService } from '../services/sharedservice.service';
 const firebaseConfig = {
     apiKey: 'AIzaSyCyP2TexHkARFI45ec1b9VEFwlNt2BdBPQ',
     authDomain: 'assessu-i14.firebaseapp.com',
@@ -51,7 +52,7 @@ const firebaseConfig = {
     StorageServiceModule,
     routing
   ],
-  providers: [InsertbloggerService, UpdatebloggerService, DeletebloggerService, BloggerslistService],
+  providers: [InsertbloggerService, UpdatebloggerService, DeletebloggerService, BloggerslistService, SharedserviceService],
   bootstrap: [AppComponent],
   exports: [MatButtonModule, MatCheckboxModule]
 

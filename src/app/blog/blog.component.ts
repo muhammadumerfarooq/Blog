@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Blog } from '../../models/blog';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { SharedserviceService } from '../../services/sharedservice.service';
 
 @Component({
   selector: 'app-blog',
@@ -36,7 +37,7 @@ export class BlogComponent implements OnInit {
   @Input() blogcreated: Blog;
   constructor(private sanitizer: DomSanitizer, private elRef: ElementRef,
     @Inject(SESSION_STORAGE) private storage: WebStorageService, private date: DatePipe,
-     private route: ActivatedRoute, private router: Router) {
+     private route: ActivatedRoute, private router: Router, private shared: SharedserviceService ) {
   //  this.mapslist = new Array<Maps>();
     this.bloggerlist = new Array<Blogger>();
     this.tags = '';
@@ -119,6 +120,7 @@ export class BlogComponent implements OnInit {
       this.blogcreated.settopic(this.question);
       this.blogcreated.setdescription(this.descrption);
       this.blogcreated.setdate(localdate);
+      this.shared.changeBlogger(this.blogcreated);
       this.router.navigateByUrl('/blog');
 
     }
