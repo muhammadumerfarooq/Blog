@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Inject, Input } from '@angular/core';
 import { Blogger } from '../../models/blogger';
 import { Maps } from '../../models/maps';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Pipe, PipeTransform } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
+import * as $ from 'jquery';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Blog } from '../../models/blog';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-blog',
-  templateUrl: './blog.component.html'
+  templateUrl: './blog.component.html',
+  providers: [DatePipe]
 })
 
 export class BlogComponent implements OnInit {
@@ -24,7 +30,13 @@ export class BlogComponent implements OnInit {
   maps: string;
   mapslist: Array<Maps>;
   map_object: Maps;
-  constructor(private sanitizer: DomSanitizer) {
+  dataname: string;
+  dataemail: string;
+
+  @Input() blogcreated: Blog;
+  constructor(private sanitizer: DomSanitizer, private elRef: ElementRef,
+    @Inject(SESSION_STORAGE) private storage: WebStorageService, private date: DatePipe,
+     private route: ActivatedRoute, private router: Router) {
   //  this.mapslist = new Array<Maps>();
     this.bloggerlist = new Array<Blogger>();
     this.tags = '';
@@ -43,24 +55,96 @@ export class BlogComponent implements OnInit {
   //  this.mapslist.push(this.map_object);
     this.url = sanitizer.bypassSecurityTrustResourceUrl(this.maps);
     this.safe = sanitizer.bypassSecurityTrustResourceUrl(this.maps);
-
+    this.dataname = this.getFromLocal('name');
+    this.dataemail = this.getFromLocal('email');
    }
+  getFromLocal(key): string {
+    // console.log('recieved= key:' + key);
+    const data = this.storage.get(key);
+    // console.log(data);
+    return data;
+  }
    getlocation(): string {
      return this.map_object.location;
    }
   ngOnInit() {
-    this.bloggerlist = new Array<Blogger>();
+
+      // $('button').click(function () {
+      //   alert('hi');
+      // });
   //  this.bloggerlist = this.reguser.getallbloggers();
   }
   submitblog() {
+   // const now = moment().format('LLLL');
+   // this.localdate = new Date('en-Us');
+   // console.log(this.localdate);
+    this.date = new DatePipe('en-Us');
+    const now = Date.now();
+    const myFormattedDate = this.date.transform(now, 'short');
+    console.log('date ' + myFormattedDate);
+    const localdate = new Date();
+    let valued: any = false;
+    if (this.question === '') {
+    const src = $('#questionid').css('border-color', 'red');
+      valued = true;
+    } else {
+     // #e6c1c7
+      const src = $('#questionid').css('border-color', '#e6c1c7');
+    }
+    if (this.descrption === '' ) {
+      const src = $('#descriptionid').css('border-color', 'red');
+      valued = true;
+    } else {
+      const src = $('#descriptionid').css('border-color', '#e6c1c7');
+    }
+    if (this.tagslist.length === 0) {
+      const src = $('#tagid').css('border-color', 'red');
+      valued = true;
+    } else {
+      const src = $('#tagid').css('border-color', '#e6c1c7');
+    }
+    if (this.location === '') {
+      const src = $('#locationid').css('border-color', 'red');
+      valued = true;
 
+    } else {
+      const src = $('#locationid').css('border-color', '#e6c1c7');
+    }
+    if (valued === false) {
+      this.blogcreated = new Blog ();
+      this.blogcreated.setcomments(0);
+      this.blogcreated.setlocation(this.location);
+      this.blogcreated.setname(this.dataname);
+      this.blogcreated.settags(this.tagslist);
+      this.blogcreated.settopic(this.question);
+      this.blogcreated.setdescription(this.descrption);
+      this.blogcreated.setdate(localdate);
+      this.router.navigateByUrl('/blog');
+
+    }
   }
-  GetIFrameUrl() {
+  logoutpressed() {
+    console.log('logut pressed');
+
+    this.storage.set('name', null);
+    this.storage.set('email', null);
+    this.router.navigateByUrl('/create-blog');
 
   }
   locationpressed() {
+    // this.elRef.nativeElement.querySelector('.col-sm-4');
+    // $(document).ready(function () {
+   // const src = $('#questionid').css('border-color', 'red');
+
+    // alert(src);
+    // });
+if (this.location === '') {
+
+// this.maps = 'https://www.google.com/maps/embed/v1/place?q=' + 'kashmir Hwy, Islamabad, Islamabad Capital Territory, Pakistan' + this.map;
+} else {
     this.maps =  'https://www.google.com/maps/embed/v1/place?q=' + this.location + this.map;
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.maps);
+  this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.maps);
+}
   }
 
   tagspressed() {

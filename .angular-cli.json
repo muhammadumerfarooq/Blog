@@ -27,9 +27,10 @@
       ],
       "scripts": [
          "lib/js/jquery.js",
-        "lib/js/bootstrap.min.js", 
+        "lib/js/bootstrap.min.js",
         "lib/js/jquery.prettyPhoto.js",
-        "lib/js/main.js"
+        "lib/js/main.js",
+        "../node_modules/jquery/dist/jquery.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

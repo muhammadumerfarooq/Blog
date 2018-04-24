@@ -2,22 +2,7 @@
 <html lang="en">
 
 <head>
-  <script language="javascript">
-    // var x = document.getElementById("demo");
-    // alert(x)
-    //     function getLocation() {
-    //         if (navigator.geolocation) {
-    //             navigator.geolocation.watchPosition(showPosition);
-    //         } else {
-    //             x.innerHTML = "Geolocation is not supported by this browser.";
-    //         }
-    //     }
-    //     function showPosition(position) {
-    //         x.innerHTML = "Latitude: " + position.coords.latitude +
-    //             "<br>Longitude: " + position.coords.longitude;
-    //             alert(x.innerHTML)
-    //     }
-  </script>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
@@ -37,10 +22,23 @@
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"> -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+<script >
+  var myApp = angular.module("myApp", []);
+    myApp.controller("myController", function ($scope) {
+     // $scope.url = 'load';
+     alert('hi')
+      $scope.load = function () {
+       // $scope.btnText = 'Please Wait...';
+        alert('hi')
+      };
+    });
+</script>
 </head>
 <!--/head-->
 
 <body>
+
   <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
     <div class="container">
       <div class="navbar-header">
@@ -91,6 +89,12 @@
               <li>
                 <a href="registration.html">Registration</a>
               </li>
+              <li>
+                <a href="" (click)='logoutpressed()'>LogOut</a>
+              </li>
+              <li>
+                <a href="terms.html">Terms of Use</a>
+              </li>
               <li class="divider"></li>
               <li>
                 <a href="privacy.html">Privacy Policy</a>
@@ -98,6 +102,7 @@
               <li>
                 <a href="terms.html">Terms of Use</a>
               </li>
+
             </ul>
           </li>
           <li>
@@ -140,17 +145,17 @@
         <!-- <form id="main-contact-form" class="contact-form" name="contact-form"  role="form"> -->
           <div class="row">
             <div class="col-sm-5">
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <input type="text" class="form-control" required="required" placeholder="Title" [(ngModel)]="title" [ngModelOptions]="{standalone: true}">
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" required="required" placeholder="Question" [(ngModel)]="question" [ngModelOptions]="{standalone: true}">
+              </div> -->
+              <div class="form-group" >
+                <input type="text" id="questionid" class="form-control" required="required" placeholder="Question" [(ngModel)]="question" [ngModelOptions]="{standalone: true}">
               </div>
                 <!-- <div class="form-group">
                   <input type="text" class="form-control" required="required" placeholder="Tags ( press enter )" [(ngModel)]="tags" [ngModelOptions]="{standalone: true}" ng-keypress="($event.which === 13)?tagspressed(tags):0" >
 
                 </div> --><div class="input-group">
-                  <input type="text" class="form-control" autocomplete="off" placeholder="Enter Tags" [(ngModel)]="tags">
+                  <input type="text" id="tagid" class="form-control" autocomplete="off" placeholder="Enter Tags" [(ngModel)]="tags">
                   <span class="input-group-btn">
                     <button class="btn btn-danger" type="button" (click)="tagspressed()">Add Tags</button>
                   </span>
@@ -179,14 +184,14 @@
               </div>
             </div>
             <div class="col-sm-7">
-              <textarea name="message" id="message" required="required" class="form-control" rows="8" placeholder="Description" [(ngModel)]="descrption"></textarea>
+              <textarea id="descriptionid" class="form-control" rows="8" placeholder="Description" [(ngModel)]="descrption" ngDefaultControl></textarea>
             </div>
           </div>
         <!-- </form> -->
       </div>
 
       <!--/.col-sm-8-->
-      <div class="col-sm-4" >
+      <div  class="col-sm-4" >
          <h4>Our Location</h4>
 <!-- <span *ngFor="let item of mapslist"> -->
   <!-- <img [attr.src]="(item)" width="1" height="1" /> -->
@@ -194,14 +199,14 @@
   <!-- {{item.location}} -->
          <!-- https://www.google.com/maps/place/Rawal+Road,+Rawalpindi,+Punjab,+Pakistan/@33.6149999,73.0796201,17z/data=!3m1!4b1!4m5!3m4!1s0x38df94b2f36c00c9:0x32828b20fe8018ba!8m2!3d33.6149955!4d73.0818088 -->
 
-         <iframe width="100%" height="215" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" [src]= "url" ></iframe>
+         <iframe id="iframeid" width="100%" height="215" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" [src]= "url" ></iframe>
 <!-- </span> -->
-
+<!-- {{url}} -->
         <!-- Kashmir Hwy, Islamabad, Islamabad Capital Territory, Pakistan -->
         <!-- <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=islamabad&key=AIzaSyCyP2TexHkARFI45ec1b9VEFwlNt2BdBPQ"
           allowfullscreen></iframe> -->
       <div class="input-group">
-        <input type="text" class="form-control" autocomplete="off" placeholder="Enter Your Location" [(ngModel)]="location">
+        <input type="text" id="locationid" class="form-control" autocomplete="off" placeholder="Enter Your Location" [(ngModel)]="location">
         <span></span>
         <span class="input-group-btn">
           <button class="btn btn-danger" type="button" (click)="locationpressed()">Add Location</button>

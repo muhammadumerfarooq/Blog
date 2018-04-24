@@ -15,7 +15,13 @@ import { RegistrationComponent } from './registration/registration.component';
 import { BlogComponent } from './blog/blog.component';
 import { Pipe, PipeTransform } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { StorageServiceModule } from 'angular-webstorage-service';
+import { routing } from './app-routing.module';
+// import { NativeScriptFormsModule } from '@angular/forms'
+import { DatePipe } from '@angular/common';
 
+import { BloggerslistService } from '../services/bloggerslist.service';
+import { CreatedBlogComponent } from './created-blog/created-blog.component';
 const firebaseConfig = {
     apiKey: 'AIzaSyCyP2TexHkARFI45ec1b9VEFwlNt2BdBPQ',
     authDomain: 'assessu-i14.firebaseapp.com',
@@ -29,7 +35,8 @@ const firebaseConfig = {
   declarations: [
     AppComponent,
     RegistrationComponent,
-    BlogComponent
+    BlogComponent,
+    CreatedBlogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,9 +47,11 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     NoopAnimationsModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    StorageServiceModule,
+    routing
   ],
-  providers: [InsertbloggerService, InsertbloggerService, DeletebloggerService],
+  providers: [InsertbloggerService, UpdatebloggerService, DeletebloggerService, BloggerslistService],
   bootstrap: [AppComponent],
   exports: [MatButtonModule, MatCheckboxModule]
 

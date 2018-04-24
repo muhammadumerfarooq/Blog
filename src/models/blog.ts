@@ -1,13 +1,27 @@
 import { Answers } from './answers';
 export class Blog {
+    description: string;
     key: string;
     name: string;
     topic: string;
     tags: string[];
-    date: string;
+    date: Date;
     comments: Number;
     TotalAnswers: Answers[];
+    location: string;
 
+    setdescription(s: string): void {
+        this.description = s;
+    }
+    getdescription(): string {
+        return this.description;
+    }
+    setlocation(s: string): void {
+        this.location = s;
+    }
+    getlocation(): string {
+       return  this.location;
+    }
     setkey(n: string): void {
         this.key = n;
     }
@@ -32,10 +46,10 @@ export class Blog {
     gettags(): string[] {
         return this.tags;
     }
-    setdate(d: string): void {
+    setdate(d: Date): void {
         this.date = d;
     }
-    getdate(): string {
+    getdate(): Date {
         return this.date;
     }
     setcomments(coments: Number): void {

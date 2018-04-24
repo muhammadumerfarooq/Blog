@@ -4,7 +4,7 @@ import { AngularFireList } from 'angularfire2/database';
 import { Blogger } from '../models/blogger';
 import { InsertbloggerService } from '../services/insertblogger.service';
 import { UpdatebloggerService } from '../services/updateblogger.service';
-
+declare var $: any;
 
 @Component({
   selector: 'app-root',
@@ -18,6 +18,7 @@ export class AppComponent {
       elem: string [];
   // public customer: Customer;
        title = 'app';
+  // tslint:disable-next-line:use-life-cycle-interface
 
   constructor(private db: AngularFireDatabase, private insertblog: InsertbloggerService, private updateblogger: UpdatebloggerService) {
 

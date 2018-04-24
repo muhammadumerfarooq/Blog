@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Blogger } from '../../models/blogger';
-import { RegisteruserService } from '../../services/registeruser.service';
+// import { RegisteruserService } from '../../services/registeruser.service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Observable } from 'rxjs/observable';
 import { InsertbloggerService } from '../../services/insertblogger.service';
-
+import { SESSION_STORAGE, WebStorageService } from 'angular-webstorage-service';
+import { BloggerslistService } from '../../services/bloggerslist.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import 'rxjs/add/operator/map';
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  providers: [RegisteruserService]
+  templateUrl: './registration.component.html'
 })
 export class RegistrationComponent implements OnInit {
 
@@ -17,20 +19,40 @@ export class RegistrationComponent implements OnInit {
   email: string;
   password: string;
   confirmpassword: string;
-  constructor(private reguser: RegisteruserService, private insert: InsertbloggerService) {
+  dataname: string;
+  datapassword: string;
+  constructor(private route: ActivatedRoute, private router: Router, private insert: InsertbloggerService,
+    @Inject(SESSION_STORAGE) private storage: WebStorageService,
+  private bloglist: BloggerslistService) {
+    this.datapassword = '';
+    this.dataname = '';
     this.bloggerlist = new Array<Blogger>();
     this.name = '';
     this.email = '';
     this.password = '';
     this.confirmpassword = '';
-    this.bloggerlist = this.reguser.getallbloggers();
+  //  this.bloggerlist = this.reguser.getallbloggers();
+ // const blogger  = new Blogger();
+  //  insert.createBlogger(blogger);
+    this.dataname =  this.getFromLocal('name');
+    this.datapassword =  this.getFromLocal('password');
+if (this.dataname !== null || this.datapassword !== null) {
+  this.router.navigateByUrl('/user-login');
 
 }
 
+}
+  getFromLocal(key): string {
+   // console.log('recieved= key:' + key);
+    const data = this.storage.get(key);
+   // console.log(data);
+    return data;
+  }
   ngOnInit() {
   }
   onRegister() {
-    this.bloggerlist = this.reguser.bloggerslist;
+    this.bloggerlist = this.bloglist.getdata();
+  //  this.bloggerlist = this.reguser.bloggerslist;
     let regcheck: boolean;
     // tslint:disable-next-line:prefer-const
     regcheck = false;
@@ -51,11 +73,32 @@ export class RegistrationComponent implements OnInit {
     blogitem.setname(this.name);
     blogitem.setemail(this.email);
     blogitem.setpassword(this.password);
-    this.insert.createBlogger(blogitem);
-    this.bloggerlist.length = 0;
-    this.bloggerlist = this.reguser.getallbloggers();
+    const value = this.insert.createBlogger(blogitem);
+ //   console.log('value' + value);
+
+    // .subscribe(
+    //  (responce => value = responce));
+
+   // this.bloggerlist.length = 0;
+   // console.log(' inserted value ' + this.insert.inserted);
+    this.setFromLocal('name', this.name);
+    this.setFromLocal('email', this.email);
+  //  console.log(this.insert.inserted);
+
+  //  if ( this.insert.inserted === true ) {
+      this.router.navigateByUrl('/create-blog');
+
+   // }
+  //  this.bloggerlist = this.reguser.getallbloggers();
   }
 }
 
+
+  }
+  setFromLocal(key, val): void {
+    // console.log('recieved= key:' + key);
+    this.storage.set(key, val);
+    // console.log(data);
+ //  return data;
   }
 }

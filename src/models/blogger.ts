@@ -3,7 +3,14 @@ export class Blogger {
     email: string;
     key: string;
     password: string;
+    location: string;
     constructor() {}
+    setlocation(e: string): void {
+        this.location = e;
+    }
+    getlocation(): string {
+        return this.location;
+    }
     setpassword(e: string): void {
         this.password = e;
     }
