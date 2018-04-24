@@ -40,6 +40,18 @@ export class SeletedblogComponent implements OnInit {
     , private route: ActivatedRoute, private router: Router, private datepipe: DatePipe, private updateblog: UpdateblogService,
     private insertans: InsertanswerService, private blogdata: BlogdataService, private blogskey: BlogsonkeyService) {
     try {
+      this.bloglist = this.blogdata.getdata();
+      // for (let i = 0; i < this.bloglist.length; i++) {
+      //   console.log(this.bloglist[i].getdate() + ' ' + this.blog.getdate());
+
+      //   if (this.bloglist[i].getdate() === this.blog.getdate()) {
+      //     this.blog.setkey(this.bloglist[i].getkey());
+      //     break;
+      //   }
+
+      // }
+
+
       this.bloglist = new Array<Blog>();
       this.answer_user = new Array<Answers>();
       this.answerslist = new Array<Answers>();
@@ -51,13 +63,14 @@ export class SeletedblogComponent implements OnInit {
       this.totalcomments = this.blog.getcomments();
       this.topic = this.blog.gettopic();
       this.date = this.blog.getdate().toString();
-      this.totalcomments = 0;
+      this.totalcomments = this.blog.comments;
       this.description = this.blog.getdescription();
       this.answers = '';
       this.tagslist = this.blog.gettags();
-      this.dataname = this.getFromLocal('name');
+      this.dataname =  this.getFromLocal('name');
       this.dataemail = this.getFromLocal('email');
-      console.log(this.dataemail + ' ' + this.dataname);
+      this.answerslist = this.blogskey.getanswersonkey(this.blog.getkey());
+    //  console.log('length ' + this.answerslist.length);
 
       if (this.dataemail === null && this.dataname === null) {
         this.router.navigateByUrl('/user-login');
@@ -81,14 +94,14 @@ export class SeletedblogComponent implements OnInit {
       console.log('date ' + myFormattedDate);
       const localdate = new Date();
       this.bloglist = this.blogdata.getdata();
-      for (let i = 0; i < this.bloglist.length; i++) {
-        console.log(this.bloglist[i].getdate() + ' ' + this.blog.getdate());
+      // for (let i = 0; i < this.bloglist.length; i++) {
+      //   console.log(this.bloglist[i].getdate() + ' ' + this.blog.getdate());
 
-        if (this.bloglist[i].getdate() === this.blog.getdate()) {
-          this.blog.setkey(this.bloglist[i].getkey());
-        }
+      //   if (this.bloglist[i].getdate() === this.blog.getdate()) {
+      //     this.blog.setkey(this.bloglist[i].getkey());
+      //   }
 
-      }
+      // }
 
       // tslint:disable-next-line:prefer-const
       let ans_user = new Answers();
